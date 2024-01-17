@@ -161,3 +161,4 @@ cython_debug/
 
 /Traduction_avis_client
 avis_*_traduit.*
+rev/
