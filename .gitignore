@@ -164,3 +164,4 @@ avis_*_traduit.*
 rev/
 test_data/
 embedding_tutorial.ipynb
+fasttext_model.wv.vectors_ngrams.npy
