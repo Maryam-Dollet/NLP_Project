@@ -13,5 +13,5 @@ sentence = st.text_input('text')
 if st.button("Get similar doc:"):
     best_match = find_similar_doc(d2v, sentence, df)
     best_match = [int(x) for x in best_match]
-    # st.write(best_match)
     st.dataframe(df[df['tag'].isin(best_match[:5])])
+

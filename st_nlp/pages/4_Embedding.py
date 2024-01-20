@@ -44,7 +44,7 @@ fig = go.Figure(data=go.Scatter(x=result_df1['x'],
                                 mode='markers',
                                 text=result_df1['word'])) # hover text goes here
 
-fig.update_layout(width=1500 ,height=1000)
+fig.update_layout(width=1300 ,height=1000)
 st.plotly_chart(fig)
 
 st.markdown("#### PCA Augmented Model")
@@ -56,7 +56,7 @@ fig = go.Figure(data=go.Scatter(x=result_df2['x'],
                                 mode='markers',
                                 text=result_df2['word'])) # hover text goes here
 
-fig.update_layout(width=1500 ,height=1000)
+fig.update_layout(width=1300 ,height=1000)
 st.plotly_chart(fig)
 
 st.subheader("TSNE Visualisation")
@@ -70,7 +70,7 @@ fig = go.Figure(data=go.Scatter(x=result_df3['x'],
                                 mode='markers',
                                 text=result_df3['word'])) # hover text goes here
 
-fig.update_layout(width=1500 ,height=1000)
+fig.update_layout(width=1300 ,height=1000)
 st.plotly_chart(fig)
 
 st.markdown("#### TSNE Augmented Model")
@@ -82,7 +82,7 @@ fig = go.Figure(data=go.Scatter(x=result_df4['x'],
                                 mode='markers',
                                 text=result_df4['word'])) # hover text goes here
 
-fig.update_layout(width=1500 ,height=1000)
+fig.update_layout(width=1300 ,height=1000)
 st.plotly_chart(fig)
 
 st.subheader("UMAP")
