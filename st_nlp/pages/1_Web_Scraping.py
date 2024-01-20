@@ -16,17 +16,14 @@ st.write("Using Beautiful Soup to scrap the website first we extracted the links
 st.write("https://fr.trustpilot.com/categories")
 
 st.markdown("#### Here are the categories extracted")
+a = pd.concat([pd.DataFrame(df["category"].unique(), columns=["category"]), load_category()], axis=1)
 
-b = load_category()
+st.dataframe(a, use_container_width=True, column_config={"url":st.column_config.LinkColumn("App URL")})
 
-st.dataframe(b)
+st.write("Next, we used the links and number of pages extracted to extract all the links of each company")
 
-st.dataframe(pd.DataFrame(df["category"].unique(), columns=["category"]))
-
-a = pd.concat([pd.DataFrame(df["category"].unique(), columns=["category"]), b], axis=1)
-
-st.dataframe(a, use_container_width=True)
+st.write("Then, we extracted the data on each company site using the links extracted previously")
 
 st.markdown("#### Sample of the reviews we extracted")
 
-st.dataframe(df2)
+st.dataframe(df2.iloc[:, :-2])
