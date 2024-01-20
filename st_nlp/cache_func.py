@@ -4,6 +4,7 @@ from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from umap import UMAP
+from hdbscan import HDBSCAN
 
 
 @st.cache_data
@@ -86,3 +87,10 @@ def get_UMAP(_model):
     result_df["word"] = labels
 
     return result_df
+
+def hdbscan_cluster(df):
+    clusterable_embedding = list(df[["x", "y", "z"]].values)
+    labels = HDBSCAN(min_samples=10,min_cluster_size=20,).fit_predict(clusterable_embedding)
+    df["category"] = labels
+    df["category"] = df["category"].astype(str)
+    return df

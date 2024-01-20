@@ -5,7 +5,7 @@ from sklearn.manifold import TSNE
 import plotly.graph_objects as go
 import pandas as pd
 
-from cache_func import load_w2v, load_glove, get_similarity, get_PCA, get_TSNE, get_UMAP
+from cache_func import load_w2v, load_glove, get_similarity, get_PCA, get_TSNE, get_UMAP, hdbscan_cluster
 
 w2v = load_w2v()
 glove = load_glove()
@@ -87,11 +87,7 @@ fig = go.Figure(data=go.Scatter(x=result_df4['x'],
 fig.update_layout(width=1500 ,height=1000)
 st.plotly_chart(fig)
 
-
-st.subheader("Tensorboard")
-
-st.write("We loaded the tsv metadata and vector files in: https://projector.tensorflow.org/")
-st.write("We used UMAP to visualise the closest points of each model")
+st.subheader("UMAP")
 
 st.markdown("#### Word2Vec")
 
@@ -108,7 +104,8 @@ st.plotly_chart(fig_3d)
 st.markdown("#### Augmented Model")
 
 result6 = get_UMAP(glove)
-st.dataframe(result6)
+# st.dataframe(result6)
+# st.write(list(result6[["x", "y", "z"]].values))
 
 fig_3d = px.scatter_3d(
     result6, x="x", y="y", z="z", hover_name="word"
@@ -116,3 +113,30 @@ fig_3d = px.scatter_3d(
 fig_3d.update_layout(width=1500 ,height=1000)
 fig_3d.update_traces(marker_size=2)
 st.plotly_chart(fig_3d)
+
+st.subheader("Using UMAP and HDBScan for Clustering")
+
+hdbscan_df1 = hdbscan_cluster(result5)
+# st.dataframe(hdbscan_df1)
+
+fig_3d = px.scatter_3d(
+    hdbscan_df1, x="x", y="y", z="z", hover_name="word", color="category"
+)
+fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_traces(marker_size=3)
+st.plotly_chart(fig_3d)
+
+hdbscan_df2 = hdbscan_cluster(result6)
+# st.dataframe(hdbscan_df2)
+
+fig_3d = px.scatter_3d(
+    hdbscan_df2, x="x", y="y", z="z", hover_name="word", color="category"
+)
+fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_traces(marker_size=3)
+st.plotly_chart(fig_3d)
+
+st.subheader("Tensorboard")
+
+st.write("We loaded the tsv metadata and vector files in: https://projector.tensorflow.org/")
+st.write("We used UMAP to visualise the closest points of each model")
