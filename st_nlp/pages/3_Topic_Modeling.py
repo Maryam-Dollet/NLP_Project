@@ -10,7 +10,6 @@ st.subheader("LDA")
 
 lda, html_string = LDA(corpus, 10)
 
-
 st.write(lda.print_topics())
 
 components.v1.html(html_string, width=1300, height=800)

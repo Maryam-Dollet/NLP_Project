@@ -112,37 +112,15 @@ fig_3d.update_traces(marker_size=2)
 
 st.plotly_chart(fig_3d)
 
-st.subheader("Using UMAP and HDBScan for Clustering")
-
-hdbscan_df1 = hdbscan_cluster(result5)
-hdbscan_df1['category'] = hdbscan_df1['category'].replace('-1' ,'outlier')
-# st.dataframe(hdbscan_df1)
-st.write(f"Number of Ouliers Detected: {len(hdbscan_df1[hdbscan_df1['category'] == 'ourlier'])}")
-
-fig_3d = px.scatter_3d(
-    hdbscan_df1, x="x", y="y", z="z", hover_name="word", color="category"
-)
-fig_3d.update_layout(width=1300 ,height=1000)
-fig_3d.update_traces(marker_size=3)
-fig_3d.update_traces(visible="legendonly", selector=lambda t: not t.name in hdbscan_df1["category"].unique()[1:])
-st.plotly_chart(fig_3d)
-
-hdbscan_df2 = hdbscan_cluster(result6)
-# st.dataframe(hdbscan_df2)
-hdbscan_df2['category'] = hdbscan_df2['category'].replace('-1' ,'outlier')
-st.write(f"Number of Ouliers Detected: {len(hdbscan_df2[hdbscan_df2['category'] == 'outlier'])}")
-# st.write(hdbscan_df2["category"].unique())
-
-fig_3d = px.scatter_3d(
-    hdbscan_df2, x="x", y="y", z="z", hover_name="word", color="category"
-)
-fig_3d.update_layout(width=1300 ,height=1000)
-fig_3d.update_traces(marker_size=3)
-fig_3d.update_traces(visible="legendonly", selector=lambda t: not t.name in hdbscan_df2["category"].unique()[1:])
-st.plotly_chart(fig_3d)
-
 st.subheader("Tensorboard")
 
 st.write("We loaded the tsv metadata and vector files in: https://projector.tensorflow.org/")
 st.write("We used UMAP to visualise the closest points of each model")
 
+st.markdown("#### Word2Vec")
+
+st.image("img/w2v_tensorboard.png")
+
+st.markdown("#### Augmented Model")
+
+st.image("img/glove_tensorboard.png")
