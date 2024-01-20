@@ -4,7 +4,7 @@ from cache_func import load_companies_translated, load_reviews_sample, load_cate
 
 st.set_page_config(layout="wide")
 
-df = pd.concat([load_companies_translated(), load_category()], axis=1)
+df = load_companies_translated() 
 df2 = load_reviews_sample()
 
 st.title("Data Gathering: Web Scraping french companies on Trustpilot")
@@ -17,7 +17,15 @@ st.write("https://fr.trustpilot.com/categories")
 
 st.markdown("#### Here are the categories extracted")
 
-st.dataframe(df["category"].unique(), use_container_width=True)
+b = load_category()
+
+st.dataframe(b)
+
+st.dataframe(pd.DataFrame(df["category"].unique(), columns=["category"]))
+
+a = pd.concat([pd.DataFrame(df["category"].unique(), columns=["category"]), b], axis=1)
+
+st.dataframe(a, use_container_width=True)
 
 st.markdown("#### Sample of the reviews we extracted")
 
