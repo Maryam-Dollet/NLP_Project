@@ -97,7 +97,7 @@ result5 = get_UMAP(w2v)
 fig_3d = px.scatter_3d(
     result5, x="x", y="y", z="z", hover_name="word"
 )
-fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_layout(width=1300 ,height=1000)
 fig_3d.update_traces(marker_size=2)
 st.plotly_chart(fig_3d)
 
@@ -110,7 +110,7 @@ result6 = get_UMAP(glove)
 fig_3d = px.scatter_3d(
     result6, x="x", y="y", z="z", hover_name="word"
 )
-fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_layout(width=1300 ,height=1000)
 fig_3d.update_traces(marker_size=2)
 st.plotly_chart(fig_3d)
 
@@ -118,21 +118,23 @@ st.subheader("Using UMAP and HDBScan for Clustering")
 
 hdbscan_df1 = hdbscan_cluster(result5)
 # st.dataframe(hdbscan_df1)
+st.write(f"Number of Ouliers Detected: {len(hdbscan_df1[hdbscan_df1['category'] == '-1'])}")
 
 fig_3d = px.scatter_3d(
     hdbscan_df1, x="x", y="y", z="z", hover_name="word", color="category"
 )
-fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_layout(width=1300 ,height=1000)
 fig_3d.update_traces(marker_size=3)
 st.plotly_chart(fig_3d)
 
 hdbscan_df2 = hdbscan_cluster(result6)
 # st.dataframe(hdbscan_df2)
+st.write(f"Number of Ouliers Detected: {len(hdbscan_df2[hdbscan_df2['category'] == '-1'])}")
 
 fig_3d = px.scatter_3d(
     hdbscan_df2, x="x", y="y", z="z", hover_name="word", color="category"
 )
-fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_layout(width=1300 ,height=1000)
 fig_3d.update_traces(marker_size=3)
 st.plotly_chart(fig_3d)
 
