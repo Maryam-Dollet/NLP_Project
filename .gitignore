@@ -166,4 +166,4 @@ test_data/
 embedding_tutorial.ipynb
 fasttext_model.wv.vectors_ngrams.npy
 visualize_word_embeddings_tensorboard_tutorial.ipynb
-semantic_seach2.ipynb
+semantic_search.ipynb
