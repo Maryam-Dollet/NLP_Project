@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 from cache_func import load_companies_translated, load_reviews_sample, load_category
 
-st.set_page_config(layout="wide")
-
 df = load_companies_translated() 
 df2 = load_reviews_sample()
 

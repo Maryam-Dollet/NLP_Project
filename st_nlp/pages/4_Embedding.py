@@ -1,7 +1,5 @@
 import streamlit as st
 import plotly_express as px
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
 import plotly.graph_objects as go
 import pandas as pd
 
@@ -9,7 +7,6 @@ from cache_func import load_model, get_similarity, get_PCA, get_TSNE, get_UMAP, 
 
 w2v = load_model('models/w2v_company_desc_model')
 glove = load_model('models/glove_transfer')
-
 
 st.title("Embeddings")
 st.subheader("Word2Vec Training")

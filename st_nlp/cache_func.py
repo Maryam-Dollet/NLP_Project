@@ -28,6 +28,7 @@ def load_category():
 def load_reviews_sample2():
     return pd.read_csv("data/reviews_sample.csv")
 
+# Embeddings
 @st.cache_data
 def load_model(path: str):
     model = Word2Vec.load(path)
@@ -84,7 +85,7 @@ def hdbscan_cluster(df):
     df["category"] = df["category"].astype(str)
     return df
 
-# Semantic Seach functions
+# Semantic Search functions
 @st.cache_data
 def load_company_tagged():
     return pd.read_csv("data/company_tagged.csv", sep=";")
@@ -96,9 +97,8 @@ def load_doc2vec():
 def find_similar_doc(_model, sentence: str, company_df):
     test_data = word_tokenize(sentence.lower())
     v1 = _model.infer_vector(test_data)
-    print("V1_infer", v1)
 
     sims = _model.dv.most_similar([v1])
     best_match = [x[0] for x in sims]
 
-    return company_df[company_df['tag'].isin(best_match[:5])]
+    return best_match
