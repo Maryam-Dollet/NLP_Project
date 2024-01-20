@@ -7,7 +7,7 @@ df2 = load_reviews_sample()
 
 # st.dataframe(df)
 
-st.title("Data Gathering: Web Scraping french companies on Trustpilot")
+st.title("Data Gathering: Web Scraping French Companies on Trustpilot")
 
 st.write("files: scrap_trust_pilot.ipynb and scrap_trust_pilot_2.ipynb")
 
