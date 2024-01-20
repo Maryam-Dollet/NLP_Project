@@ -1,9 +1,14 @@
 import streamlit as st
-from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud
 
 df = load_reviews_sample2()
 df2 = load_companies_translated()
 df3 = load_reviews_sample()
+df4 = load_company_tagged()
 
 st.title("Data Processing")
 
@@ -42,6 +47,29 @@ st.write("- Apply lemmatization of each token")
 
 st.markdown("### Words that appear the most in all descriptions")
 
+# st.dataframe(df4)
+
+desc_token = df4["tokenized_desc"].apply(lambda x: x.split())
+# st.dataframe(desc_token)
+
+freq = get_freq(desc_token)
+
+wc = get_wordcloud(freq)
+
+st.image(wc.to_array(), width=800)
+
 st.markdown("### Words that appear the most for each category")
+
+category = st.selectbox("Select Category", df4["category"].unique())
+
+filtered_df = df4[df4["category"] == category]
+
+filtered_desc = filtered_df["tokenized_desc"].apply(lambda x: x.split())
+
+cat_freq = get_freq(filtered_desc)
+
+wc = WordCloud().fit_words(cat_freq)
+
+st.image(wc.to_array(), width=800)
 
 st.markdown("### N-grams")

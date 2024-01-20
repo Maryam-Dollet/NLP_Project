@@ -12,6 +12,7 @@ from umap import UMAP
 from hdbscan import HDBSCAN
 import pyLDAvis
 import pyLDAvis.gensim
+from wordcloud import WordCloud
 
 
 @st.cache_data
@@ -132,3 +133,17 @@ def LDA(corpus, nb_topics):
     return lda, html_str
 
 
+@st.cache_data
+def get_freq(desc_token):
+    freq = {}
+    for desc in desc_token:
+        for item in desc:
+            if (item in freq):
+                freq[item] += 1
+            else:
+                freq[item] = 1
+    return freq
+
+@st.cache_data
+def get_wordcloud(freq):
+    return WordCloud().fit_words(freq)
