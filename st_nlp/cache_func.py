@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
+import json
 from gensim.models import Word2Vec
 from gensim.models.doc2vec import Doc2Vec
+from gensim.models import LdaModel
+from gensim import corpora
 from nltk.tokenize import word_tokenize
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
@@ -102,3 +105,12 @@ def find_similar_doc(_model, sentence: str, company_df):
     best_match = [x[0] for x in sims]
 
     return best_match
+
+#Topic Modeling
+@st.cache_data
+def load_corpus():
+    with open("data/pipe7.json", 'r') as f:
+        data = json.load(f)
+    return data
+
+

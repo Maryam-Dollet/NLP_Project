@@ -1,7 +1,6 @@
 import streamlit as st
 import plotly_express as px
 import plotly.graph_objects as go
-import pandas as pd
 
 from cache_func import load_model, get_similarity, get_PCA, get_TSNE, get_UMAP, hdbscan_cluster
 
