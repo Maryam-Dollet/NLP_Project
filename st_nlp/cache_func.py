@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from gensim.models import Word2Vec
+from gensim.models.doc2vec import Doc2Vec
+from nltk.tokenize import word_tokenize
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from umap import UMAP
@@ -26,21 +28,14 @@ def load_category():
 def load_reviews_sample2():
     return pd.read_csv("data/reviews_sample.csv")
 
-
 @st.cache_data
-def load_w2v():
-    w2v_model = Word2Vec.load('models/w2v_company_desc_model')
-    return w2v_model
+def load_model(path: str):
+    model = Word2Vec.load(path)
+    return model
 
 
 def get_similarity(model, token):
     return model.wv.most_similar(positive=[token])
-
-
-@st.cache_data
-def load_glove():
-    w2v_model = Word2Vec.load('models/glove_transfer')
-    return w2v_model
 
 
 @st.cache_data
@@ -94,3 +89,22 @@ def hdbscan_cluster(df):
     df["category"] = labels
     df["category"] = df["category"].astype(str)
     return df
+
+# Semantic Seach functions
+@st.cache_data
+def load_company_tagged():
+    return pd.read_csv("data/company_tagged.csv", sep=";")
+
+@st.cache_data
+def load_doc2vec():
+    return Doc2Vec.load("models/d2v.model")
+
+def find_similar_doc(_model, sentence: str, company_df):
+    test_data = word_tokenize(sentence.lower())
+    v1 = _model.infer_vector(test_data)
+    print("V1_infer", v1)
+
+    sims = _model.dv.most_similar([v1])
+    best_match = [x[0] for x in sims]
+    
+    return company_df[company_df['tag'].isin(best_match[:5])]
