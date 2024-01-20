@@ -39,12 +39,6 @@ def get_similarity(model, token):
 
 
 @st.cache_data
-def load_doc2vec():
-    w2v_model = Word2Vec.load('models/d2v.model')
-    return w2v_model
-
-
-@st.cache_data
 def get_PCA(_model):
     labels = list(_model.wv.key_to_index.keys())
     vectors = _model.wv[_model.wv.key_to_index.keys()]
@@ -106,5 +100,5 @@ def find_similar_doc(_model, sentence: str, company_df):
 
     sims = _model.dv.most_similar([v1])
     best_match = [x[0] for x in sims]
-    
+
     return company_df[company_df['tag'].isin(best_match[:5])]
