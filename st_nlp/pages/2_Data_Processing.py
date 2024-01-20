@@ -1,8 +1,5 @@
 import streamlit as st
 from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud
 
 df = load_reviews_sample2()
