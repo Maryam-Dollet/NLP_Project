@@ -7,6 +7,8 @@ df3 = load_reviews_sample()
 
 st.title("Data Processing")
 
+st.write("file name: data_cleaning.ipynb")
+
 st.subheader("First Cleaning")
 
 st.write("In the descriptions and the reviews there are emojis and other punctuations which make the data unclean. This is why we need to clean it.")
@@ -28,3 +30,18 @@ st.subheader("Translation: Company reviews")
 st.write("There are in total 235503 reviews without taking into account the None values. There is also an imbalance in the number of reviews per category. To reduce the problem we randomly chose the same number of reviews per category")
 
 st.dataframe(df3)
+
+st.title("Data Tokenization")
+st.write("file name: data_tokenizaation.ipynb")
+
+st.markdown("##### General Procedure")
+st.write("- Remove punctuation")
+st.write("- Lower the characters of tokens")
+st.write("- Remove tokens whose length is below 2")
+st.write("- Apply lemmatization of each token")
+
+st.markdown("### Words that appear the most in all descriptions")
+
+st.markdown("### Words that appear the most for each category")
+
+st.markdown("### N-grams")
