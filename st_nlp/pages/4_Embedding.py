@@ -2,7 +2,7 @@ import streamlit as st
 import plotly_express as px
 import plotly.graph_objects as go
 
-from cache_func import load_model, get_similarity, get_PCA, get_TSNE, get_UMAP, hdbscan_cluster
+from cache_func import load_model, get_similarity, get_PCA, get_TSNE, get_UMAP
 
 w2v = load_model('models/w2v_company_desc_model')
 glove = load_model('models/glove_transfer')
