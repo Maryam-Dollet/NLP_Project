@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from gensim.models import Word2Vec
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 
 
 @st.cache_data
@@ -17,24 +19,56 @@ def load_reviews_sample():
 def load_category():
     return pd.read_csv("data/category_data.csv", sep=";").dropna(ignore_index=True)
 
+
 @st.cache_data
 def load_reviews_sample2():
     return pd.read_csv("data/reviews_sample.csv")
+
 
 @st.cache_data
 def load_w2v():
     w2v_model = Word2Vec.load('models/w2v_company_desc_model')
     return w2v_model
 
+
 def get_similarity(model, token):
     return model.wv.most_similar(positive=[token])
+
 
 @st.cache_data
 def load_glove():
     w2v_model = Word2Vec.load('models/glove_transfer')
     return w2v_model
 
+
 @st.cache_data
 def load_doc2vec():
     w2v_model = Word2Vec.load('models/d2v.model')
     return w2v_model
+
+
+@st.cache_data
+def get_PCA(_model):
+    labels = list(_model.wv.key_to_index.keys())
+    vectors = _model.wv[_model.wv.key_to_index.keys()]
+
+    pca = PCA(n_components=2)
+    result = pca.fit_transform(vectors)
+
+    result_df = pd.DataFrame(result, columns=["x", "y"])
+    result_df["word"] = labels
+    return result_df
+
+
+@st.cache_data
+def get_TSNE(_model):
+    labels = list(_model.wv.key_to_index.keys())
+    vectors = _model.wv[_model.wv.key_to_index.keys()]
+
+    tsne = TSNE(n_components=2, verbose=1,n_iter=1000,random_state=1)
+    tsne_results = tsne.fit_transform(vectors)
+
+    result_df = pd.DataFrame(tsne_results, columns=["x", "y"])
+    result_df["word"] = labels
+
+    return result_df
