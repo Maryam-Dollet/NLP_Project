@@ -10,6 +10,8 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from umap import UMAP
 from hdbscan import HDBSCAN
+import pyLDAvis
+import pyLDAvis.gensim
 
 
 @st.cache_data
@@ -112,5 +114,21 @@ def load_corpus():
     with open("data/pipe7.json", 'r') as f:
         data = json.load(f)
     return data
+
+
+@st.cache_data
+def LDA(corpus, nb_topics):
+    dictionary = corpora.Dictionary(corpus)
+    doc_term_matrix = [dictionary.doc2bow(doc) for doc in corpus]
+
+    # LSA model
+    lda = LdaModel(doc_term_matrix, num_topics=nb_topics, id2word = dictionary)
+
+    vis = pyLDAvis.gensim.prepare(lda, doc_term_matrix, dictionary)
+
+    html_str = pyLDAvis.prepared_data_to_html(vis)
+
+    # LSA model
+    return lda, html_str
 
 
