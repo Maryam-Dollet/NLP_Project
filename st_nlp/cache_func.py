@@ -3,6 +3,7 @@ import pandas as pd
 from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from umap import UMAP
 
 
 @st.cache_data
@@ -69,6 +70,19 @@ def get_TSNE(_model):
     tsne_results = tsne.fit_transform(vectors)
 
     result_df = pd.DataFrame(tsne_results, columns=["x", "y"])
+    result_df["word"] = labels
+
+    return result_df
+
+@st.cache_data
+def get_UMAP(_model):
+    labels = list(_model.wv.key_to_index.keys())
+    vectors = _model.wv[_model.wv.key_to_index.keys()]
+
+    umap_3d = UMAP(n_components=3, init='random', random_state=0)
+    proj_3d = umap_3d.fit_transform(vectors)
+
+    result_df = pd.DataFrame(proj_3d, columns=["x", "y", "z"])
     result_df["word"] = labels
 
     return result_df

@@ -5,8 +5,7 @@ from sklearn.manifold import TSNE
 import plotly.graph_objects as go
 import pandas as pd
 
-
-from cache_func import load_w2v, load_glove, get_similarity, get_PCA, get_TSNE
+from cache_func import load_w2v, load_glove, get_similarity, get_PCA, get_TSNE, get_UMAP
 
 w2v = load_w2v()
 glove = load_glove()
@@ -66,7 +65,7 @@ st.subheader("TSNE Visualisation")
 
 st.markdown("#### TSNE Word2Vec")
 
-result_df3 = get_PCA(w2v)
+result_df3 = get_TSNE(w2v)
 
 fig = go.Figure(data=go.Scatter(x=result_df3['x'],
                                 y=result_df3['y'],
@@ -78,7 +77,7 @@ st.plotly_chart(fig)
 
 st.markdown("#### TSNE Augmented Model")
 
-result_df4 = get_PCA(glove)
+result_df4 = get_TSNE(glove)
 
 fig = go.Figure(data=go.Scatter(x=result_df4['x'],
                                 y=result_df4['y'],
@@ -96,4 +95,24 @@ st.write("We used UMAP to visualise the closest points of each model")
 
 st.markdown("#### Word2Vec")
 
+result5 = get_UMAP(w2v)
+# st.dataframe(result5)
+
+fig_3d = px.scatter_3d(
+    result5, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
+
 st.markdown("#### Augmented Model")
+
+result6 = get_UMAP(glove)
+st.dataframe(result6)
+
+fig_3d = px.scatter_3d(
+    result6, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1500 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
