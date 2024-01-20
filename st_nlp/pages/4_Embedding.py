@@ -120,7 +120,7 @@ st.subheader("Using UMAP and HDBScan for Clustering")
 hdbscan_df1 = hdbscan_cluster(result5)
 hdbscan_df1['category'] = hdbscan_df1['category'].replace('-1' ,'outlier')
 # st.dataframe(hdbscan_df1)
-st.write(f"Number of Ouliers Detected: {len(hdbscan_df1[hdbscan_df1['category'] == '-1'])}")
+st.write(f"Number of Ouliers Detected: {len(hdbscan_df1[hdbscan_df1['category'] == 'ourlier'])}")
 
 fig_3d = px.scatter_3d(
     hdbscan_df1, x="x", y="y", z="z", hover_name="word", color="category"
@@ -133,7 +133,7 @@ st.plotly_chart(fig_3d)
 hdbscan_df2 = hdbscan_cluster(result6)
 # st.dataframe(hdbscan_df2)
 hdbscan_df2['category'] = hdbscan_df2['category'].replace('-1' ,'outlier')
-st.write(f"Number of Ouliers Detected: {len(hdbscan_df2[hdbscan_df2['category'] == '-1'])}")
+st.write(f"Number of Ouliers Detected: {len(hdbscan_df2[hdbscan_df2['category'] == 'outlier'])}")
 # st.write(hdbscan_df2["category"].unique())
 
 fig_3d = px.scatter_3d(
