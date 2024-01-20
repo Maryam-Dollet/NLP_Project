@@ -16,3 +16,7 @@ def load_reviews_sample():
 @st.cache_data
 def load_category():
     return pd.read_csv("data/category_data.csv", sep=";").dropna(ignore_index=True)
+
+@st.cache_data
+def load_reviews_sample2():
+    return pd.read_csv("data/reviews_sample.csv")

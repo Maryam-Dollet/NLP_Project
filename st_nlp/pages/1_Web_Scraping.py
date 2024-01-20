@@ -7,6 +7,8 @@ st.set_page_config(layout="wide")
 df = load_companies_translated() 
 df2 = load_reviews_sample()
 
+# st.dataframe(df)
+
 st.title("Data Gathering: Web Scraping french companies on Trustpilot")
 
 st.write("files: scrap_trust_pilot.ipynb and scrap_trust_pilot_2.ipynb")
@@ -20,9 +22,9 @@ a = pd.concat([pd.DataFrame(df["category"].unique(), columns=["category"]), load
 
 st.dataframe(a, use_container_width=True, column_config={"url":st.column_config.LinkColumn("App URL")})
 
-st.write("Next, we used the links and number of pages extracted to extract all the links of each company")
+st.write("Next, we used the links and number of pages extracted to extract all the links of each company as well as the number of pages of the reviews")
 
-st.write("Then, we extracted the data on each company site using the links extracted previously")
+st.write("Then, we extracted the data on each company site using the links extracted previously. In the end we had 235503 rows of reviews. For this we had to set checkpoint in order to not lose data in case the program crashes. So, for each tenth iteration, we saved the extracted data and if we reexecture the program by indicating the right iteration, the program continues. This process took time, because we had to set up a sleep(2) because the website will strike us for requesting too much and too fast. This made the extraction take a lot of time.")
 
 st.markdown("#### Sample of the reviews we extracted")
 
