@@ -76,6 +76,20 @@ ng = st.selectbox("N-grams", [2, 3, 4])
 
 n = get_ngrams(ng, df2, pipe)
 
-for x, y in n.items():
-    st.markdown(f"### {x}")
-    st.markdown(y)
+# for x, y in n.items():
+#     st.markdown(f"### {x}")
+#     st.markdown(y)
+
+d1 = dict(list(n.items())[len(n)//2:])
+d2 = dict(list(n.items())[:len(n)//2])
+col1, col2 = st.columns(2)
+
+with col1:
+    for x, y in d2.items():
+        st.markdown(f"### {x}")
+        st.markdown(y)
+
+with col2:
+    for x, y in d1.items():
+        st.markdown(f"### {x}")
+        st.markdown(y)
