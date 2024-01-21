@@ -1,6 +1,7 @@
 import streamlit as st
-import nltk
+from cache_func import punkt
+
 st.set_page_config(layout="wide")
+punkt()
 
 st.title("NLP Final Project")
-nltk.download('punkt')
