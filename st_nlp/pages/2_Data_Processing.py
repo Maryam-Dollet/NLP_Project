@@ -14,7 +14,7 @@ st.write("file name: data_cleaning.ipynb")
 st.subheader("First Cleaning")
 
 st.write("In the descriptions and the reviews there are emojis and other punctuations which make the data unclean. This is why we need to clean it.")
-st.write("To do this, we used the clean-text library: https://pypi., use_container_width=Trueorg/project/clean-text/")
+st.write("To do this, we used the clean-text library: https://pypi.org/project/clean-text/")
 
 st.write()
 st.write("After cleaning the columns company description and reviews we chose to translate them.")
