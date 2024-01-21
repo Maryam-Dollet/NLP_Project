@@ -13,26 +13,7 @@ st.write("To be able to make a similarity search of documents with a sentence, w
 
 st.dataframe(df)
 
-# sentence = st.text_input('text')
-# if st.button("Get similar doc:"):
-#     best_match = find_similar_doc(d2v, sentence, df)
-#     best_match = [int(x) for x in best_match]
-#     st.dataframe(df[df['tag'].isin(best_match[:5])])
-
-
-# prompt = st.chat_input("Say something")
-# if prompt:
-#     st.write(f"User has sent the following prompt: {prompt}")
-#     best_match = find_similar_doc(d2v, prompt, df)
-#     best_match = [int(x) for x in best_match]
-
-#     df_match = df[df['tag'].isin(best_match[:5])]
-
-#     for index, row in df_match.iterrows():
-#         st.write(row["company_name"])
-#         st.write(row["description_en"])
-
-st.markdown("## Chatbot Test")
+st.markdown("## Chatbot Using Doc2Vec Search")
 
 # Initialize chat history
 if "messages" not in st.session_state:
