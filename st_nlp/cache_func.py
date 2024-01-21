@@ -136,8 +136,19 @@ def LDA(corpus, nb_topics):
 
     html_str = pyLDAvis.prepared_data_to_html(vis)
 
+    n_words = 10
+
+    topic_words = pd.DataFrame({})
+
+    for i, topic in enumerate(lda.get_topics()):
+        top_feature_ids = topic.argsort()[-n_words:][::-1]
+        feature_values = topic[top_feature_ids]
+        words = [dictionary[id] for id in top_feature_ids]
+        topic_df = pd.DataFrame({'value': feature_values, 'word': words, 'topic': i})
+        topic_words = pd.concat([topic_words, topic_df], ignore_index=True)
+
     # LSA model
-    return lda, html_str
+    return lda, html_str, topic_words
 
 
 @st.cache_data
