@@ -73,6 +73,7 @@ def get_TSNE(_model):
 
     return result_df
 
+
 @st.cache_data
 def get_UMAP(_model):
     labels = list(_model.wv.key_to_index.keys())
@@ -99,9 +100,11 @@ def hdbscan_cluster(df):
 def load_company_tagged():
     return pd.read_csv("data/company_tagged.csv", sep=";")
 
+
 @st.cache_data
 def load_doc2vec():
     return Doc2Vec.load("models/d2v.model")
+
 
 def find_similar_doc(_model, sentence: str, company_df):
     test_data = word_tokenize(sentence.lower())
@@ -177,7 +180,7 @@ def get_ngrams(n, company_df, pipe7):
             for token in company_ngram_freq_dict[company]:
                 merged_dict[token] += company_ngram_freq_dict[company][token]
         # we print the 5 most frequent bigrams in the category
-        print(sorted(merged_dict, key=merged_dict.get, reverse=True)[:5])
+        # print(sorted(merged_dict, key=merged_dict.get, reverse=True)[:5])
         dict_cat[category] = sorted(merged_dict, key=merged_dict.get, reverse=True)[:5]
 
     return dict_cat
