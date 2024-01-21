@@ -1,9 +1,6 @@
 import streamlit as st
-import pandas as pd
-import time
-import random
-from cache_func import load_company_tagged, load_doc2vec, find_similar_doc
-
+import plotly.express as px
+from cache_func import load_company_tagged, load_doc2vec, find_similar_doc, get_UMAP_d2v, hdbscan_cluster_2
 df = load_company_tagged()
 d2v = load_doc2vec()
 
@@ -13,58 +10,29 @@ st.write("To be able to make a similarity search of documents with a sentence, w
 
 st.dataframe(df)
 
-st.markdown("## Chatbot Using Doc2Vec Search")
+st.markdown("### Get Matching Documents")
 
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-    for response in message["responses"]:
-        with st.chat_message(message["role"]):
-            st.markdown(response)
-# Accept user input
-if prompt := st.chat_input("What are your needs?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt, "responses": []})
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    
-    best_match = find_similar_doc(d2v, prompt, df)
+sentence = st.text_input('Request to Search')
+if st.button("Get similar doc:"):
+    best_match = find_similar_doc(d2v, sentence, df)
     best_match = [int(x) for x in best_match]
-    df_match = df[df['tag'].isin(best_match[:3])]
+    st.dataframe(df[df['tag'].isin(best_match[:5])])
 
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        assistant_response = f"Here are the best matches found for {prompt}: "
-        # Simulate stream of response with milliseconds delay
-        for chunk in assistant_response.split():
-            full_response += chunk + " "
-            time.sleep(0.05)
-            # Add a blinking cursor to simulate typing
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
+st.markdown("### UMAP")
 
+df_umap = get_UMAP_d2v(d2v, df)
 
-    responses = []
-    for index, row in df_match.iterrows():
-        time.sleep(0.5)
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            response1 = ""
-            assistant_response = row["company_name"] + " : " + row["description_en"]
-            for chunk in assistant_response.split():
-                response1 += chunk + " "
-                time.sleep(0.05)
-                message_placeholder.markdown(response1 + "▌")
-            message_placeholder.markdown(response1)
-            responses.append(response1)
+st.dataframe(df_umap)
 
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": full_response, "responses": responses})
+cluster_df = hdbscan_cluster_2(df_umap)
+
+cluster_df['category'] = cluster_df['category'].replace('-1' ,'outlier')
+st.write(f"Number of Ouliers Detected: {len(cluster_df[cluster_df['category'] == 'outlier'])} out of {len(cluster_df)}")
+
+fig_3d = px.scatter_3d(
+    cluster_df, x="x", y="y", z="z", hover_data=cluster_df[["word", "cat"]], color="category"
+)
+fig_3d.update_layout(width=1300 ,height=1000)
+fig_3d.update_traces(marker_size=3)
+fig_3d.update_traces(visible="legendonly", selector=lambda t: not t.name in cluster_df["category"].unique())
+st.plotly_chart(fig_3d)

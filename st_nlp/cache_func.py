@@ -184,3 +184,28 @@ def get_ngrams(n, company_df, pipe7):
         dict_cat[category] = sorted(merged_dict, key=merged_dict.get, reverse=True)[:5]
 
     return dict_cat
+
+
+@st.cache_data
+def get_UMAP_d2v(_model, df):
+    tags = df["tag"]
+    labels = df["company_name"]
+    category = df["category"]
+    vectors = [_model.dv[tag] for tag in tags]
+    umap_3d = UMAP(n_components=3, init='random', random_state=0)
+    proj_3d = umap_3d.fit_transform(vectors)
+
+
+    result_df_umap = pd.DataFrame(proj_3d, columns=["x", "y", "z"])
+    result_df_umap["word"] = labels
+    result_df_umap["cat"] = category
+
+    return result_df_umap
+
+# Clustering
+def hdbscan_cluster_2(df):
+    clusterable_embedding = list(df[["x", "y", "z"]].values)
+    labels = HDBSCAN(min_samples=20,min_cluster_size=50,).fit_predict(clusterable_embedding)
+    df["category"] = labels
+    df["category"] = df["category"].astype(str)
+    return df
