@@ -1,11 +1,12 @@
 import streamlit as st
-from wordcloud import WordCloud
-from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud
+from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud, load_corpus, get_ngrams
 
 df = load_reviews_sample2()
 df2 = load_companies_translated()
 df3 = load_reviews_sample()
 df4 = load_company_tagged()
+
+pipe = load_corpus()
 
 st.title("Data Processing")
 
@@ -65,8 +66,16 @@ filtered_desc = filtered_df["tokenized_desc"].apply(lambda x: x.split())
 
 cat_freq = get_freq(filtered_desc)
 
-wc = WordCloud().fit_words(cat_freq)
+wc = get_wordcloud(cat_freq)
 
 st.image(wc.to_array(), width=800)
 
-st.markdown("### N-grams")
+st.markdown("### N-grams per category")
+
+ng = st.selectbox("N-grams", [2, 3, 4])
+
+n = get_ngrams(ng, df2, pipe)
+
+for x, y in n.items():
+    st.markdown(f"### {x}")
+    st.markdown(y)
