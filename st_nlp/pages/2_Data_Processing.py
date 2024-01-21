@@ -1,5 +1,4 @@
 import streamlit as st
-from wordcloud import WordCloud
 from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud, load_corpus, get_ngrams
 
 df = load_reviews_sample2()
