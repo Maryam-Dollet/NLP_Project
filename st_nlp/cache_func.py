@@ -6,6 +6,7 @@ from gensim.models import Word2Vec
 from gensim.models.doc2vec import Doc2Vec
 from gensim.models import LdaModel
 from gensim import corpora
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk import ngrams
 from sklearn.decomposition import PCA
@@ -209,3 +210,7 @@ def hdbscan_cluster_2(df):
     df["category"] = labels
     df["category"] = df["category"].astype(str)
     return df
+
+# For Whatever reason need to install punkt for chatbot
+def punkt():
+    nltk.download('punkt')
