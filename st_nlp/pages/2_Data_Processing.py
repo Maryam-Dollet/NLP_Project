@@ -67,12 +67,16 @@ filtered_desc = filtered_df["tokenized_desc"].apply(lambda x: x.split())
 
 cat_freq = get_freq(filtered_desc)
 
-wc = WordCloud().fit_words(cat_freq)
+wc = get_wordcloud(cat_freq)
 
 st.image(wc.to_array(), width=800)
 
-st.markdown("### N-grams")
+st.markdown("### N-grams per category")
 
-n = get_ngrams(3, df2, pipe)
+ng = st.selectbox("N-grams", [2, 3, 4])
 
-st.write(n)
+n = get_ngrams(ng, df2, pipe)
+
+for x, y in n.items():
+    st.markdown(f"### {x}")
+    st.markdown(y)
