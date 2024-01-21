@@ -50,10 +50,10 @@ def get_PCA(_model):
     labels = list(_model.wv.key_to_index.keys())
     vectors = _model.wv[_model.wv.key_to_index.keys()]
 
-    pca = PCA(n_components=2)
+    pca = PCA(n_components=3)
     result = pca.fit_transform(vectors)
 
-    result_df = pd.DataFrame(result, columns=["x", "y"])
+    result_df = pd.DataFrame(result, columns=["x", "y", "z"])
     result_df["word"] = labels
     return result_df
 
@@ -63,10 +63,10 @@ def get_TSNE(_model):
     labels = list(_model.wv.key_to_index.keys())
     vectors = _model.wv[_model.wv.key_to_index.keys()]
 
-    tsne = TSNE(n_components=2, verbose=1,n_iter=1000,random_state=1)
+    tsne = TSNE(n_components=3, verbose=1,n_iter=1000,random_state=1)
     tsne_results = tsne.fit_transform(vectors)
 
-    result_df = pd.DataFrame(tsne_results, columns=["x", "y"])
+    result_df = pd.DataFrame(tsne_results, columns=["x", "y", "z"])
     result_df["word"] = labels
 
     return result_df

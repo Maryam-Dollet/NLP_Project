@@ -23,11 +23,13 @@ if st.button("Get similarity for Word2Vec"):
     col1, col2 = st.columns(2)
     with col1:
         try:
+            st.write("Word2Vec")
             st.write(get_similarity(w2v, request1))
         except:
             st.write("An error has occured, the word is not in the model")
     with col2:
         try:
+            st.write("Word2Vec + GloVe")
             st.write(get_similarity(glove, request1))
         except:
             st.write("An error has occured, the word is not in the model")
@@ -38,25 +40,23 @@ st.markdown("#### PCA Word2Vec")
 
 result_df1 = get_PCA(w2v)
 
-fig = go.Figure(data=go.Scatter(x=result_df1['x'],
-                                y=result_df1['y'],
-                                mode='markers',
-                                text=result_df1['word'])) # hover text goes here
-
-fig.update_layout(width=1300 ,height=1000)
-st.plotly_chart(fig)
+fig_3d = px.scatter_3d(
+    result_df1, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1300 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
 
 st.markdown("#### PCA Augmented Model")
 
 result_df2 = get_PCA(glove)
 
-fig = go.Figure(data=go.Scatter(x=result_df2['x'],
-                                y=result_df2['y'],
-                                mode='markers',
-                                text=result_df2['word'])) # hover text goes here
-
-fig.update_layout(width=1300 ,height=1000)
-st.plotly_chart(fig)
+fig_3d = px.scatter_3d(
+    result_df2, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1300 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
 
 st.subheader("TSNE Visualisation")
 
@@ -64,25 +64,23 @@ st.markdown("#### TSNE Word2Vec")
 
 result_df3 = get_TSNE(w2v)
 
-fig = go.Figure(data=go.Scatter(x=result_df3['x'],
-                                y=result_df3['y'],
-                                mode='markers',
-                                text=result_df3['word'])) # hover text goes here
-
-fig.update_layout(width=1300 ,height=1000)
-st.plotly_chart(fig)
+fig_3d = px.scatter_3d(
+    result_df3, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1300 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
 
 st.markdown("#### TSNE Augmented Model")
 
 result_df4 = get_TSNE(glove)
 
-fig = go.Figure(data=go.Scatter(x=result_df4['x'],
-                                y=result_df4['y'],
-                                mode='markers',
-                                text=result_df4['word'])) # hover text goes here
-
-fig.update_layout(width=1300 ,height=1000)
-st.plotly_chart(fig)
+fig_3d = px.scatter_3d(
+    result_df4, x="x", y="y", z="z", hover_name="word"
+)
+fig_3d.update_layout(width=1300 ,height=1000)
+fig_3d.update_traces(marker_size=2)
+st.plotly_chart(fig_3d)
 
 st.subheader("UMAP")
 
