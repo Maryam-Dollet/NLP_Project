@@ -211,5 +211,6 @@ def hdbscan_cluster_2(df):
     df["category"] = df["category"].astype(str)
     return df
 
+# For Whatever reason need to install punkt for chatbot
 def punkt():
     nltk.download('punkt')
