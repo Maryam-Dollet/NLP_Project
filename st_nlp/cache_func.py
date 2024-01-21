@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
 import json
+from collections import defaultdict  # For word frequency
 from gensim.models import Word2Vec
 from gensim.models.doc2vec import Doc2Vec
 from gensim.models import LdaModel
 from gensim import corpora
 from nltk.tokenize import word_tokenize
+from nltk import ngrams
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from umap import UMAP
@@ -14,7 +16,7 @@ import pyLDAvis
 import pyLDAvis.gensim
 from wordcloud import WordCloud
 
-
+# Load Data
 @st.cache_data
 def load_companies_translated():
     return pd.read_csv("data/company_desc_translated.csv", sep=";").dropna(ignore_index=True)
@@ -84,6 +86,7 @@ def get_UMAP(_model):
 
     return result_df
 
+# Clustering
 def hdbscan_cluster(df):
     clusterable_embedding = list(df[["x", "y", "z"]].values)
     labels = HDBSCAN(min_samples=10,min_cluster_size=20,).fit_predict(clusterable_embedding)
@@ -144,6 +147,37 @@ def get_freq(desc_token):
                 freq[item] = 1
     return freq
 
+
 @st.cache_data
 def get_wordcloud(freq):
     return WordCloud().fit_words(freq)
+
+
+# we create a function that takes the number of words we want in the n-grams as an argument, doing the same thing than before
+@st.cache_data
+def get_ngrams(n, company_df, pipe7):
+    company_id = 0
+    company_ngram_freq_dict = dict()
+    categories = list(company_df["category"].unique())
+    for company in pipe7:
+        freq_dict = defaultdict(int)
+
+        for token in ngrams(company, n): # Count token frequency in each company description
+            freq_dict[token] += 1
+        company_ngram_freq_dict[company_df["company_name"][company_id]] = freq_dict # Add company name as key to dict and the frequency dictionnary as value
+
+        company_id += 1
+
+    dict_cat = {}
+    for category in categories:
+        # print(category + " :")
+        # we merge all the dictionaries of the companies in the same category
+        merged_dict = defaultdict(int)
+        for company in company_df[company_df["category"] == category]["company_name"]:
+            for token in company_ngram_freq_dict[company]:
+                merged_dict[token] += company_ngram_freq_dict[company][token]
+        # we print the 5 most frequent bigrams in the category
+        print(sorted(merged_dict, key=merged_dict.get, reverse=True)[:5])
+        dict_cat[category] = sorted(merged_dict, key=merged_dict.get, reverse=True)[:5]
+
+    return dict_cat

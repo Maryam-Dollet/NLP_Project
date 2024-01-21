@@ -1,11 +1,13 @@
 import streamlit as st
 from wordcloud import WordCloud
-from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud
+from cache_func import load_reviews_sample2, load_companies_translated, load_reviews_sample, load_company_tagged, get_freq, get_wordcloud, load_corpus, get_ngrams
 
 df = load_reviews_sample2()
 df2 = load_companies_translated()
 df3 = load_reviews_sample()
 df4 = load_company_tagged()
+
+pipe = load_corpus()
 
 st.title("Data Processing")
 
@@ -70,3 +72,7 @@ wc = WordCloud().fit_words(cat_freq)
 st.image(wc.to_array(), width=800)
 
 st.markdown("### N-grams")
+
+n = get_ngrams(3, df2, pipe)
+
+st.write(n)
