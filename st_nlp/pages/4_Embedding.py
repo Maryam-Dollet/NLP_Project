@@ -8,6 +8,8 @@ w2v = load_model('models/w2v_company_desc_model')
 glove = load_model('models/glove_transfer')
 
 st.title("Embeddings")
+st.write("file: embedding.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/embedding.ipynb")
 st.subheader("Word2Vec Training")
 
 st.write("We used the gensim library to train a Word2Vec on our tokenized description tokens.")

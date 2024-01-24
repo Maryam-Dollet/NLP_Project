@@ -5,6 +5,8 @@ df = load_company_tagged()
 d2v = load_doc2vec()
 
 st.title("Semantic Search Using Doc2Vec")
+st.write("file: semantic_search2.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/semantic_search2.ipynb")
 
 st.write("To be able to make a similarity search of documents with a sentence, we trained a Doc2Vec with each description of a company having a tag. This enables us to search the company that matches the best the request")
 
