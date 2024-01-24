@@ -9,7 +9,7 @@ glove = load_model('models/glove_transfer')
 result5 = get_UMAP(w2v)
 result6 = get_UMAP(glove)
 
-st.subheader("Using UMAP and HDBScan for Clustering")
+st.header("Using UMAP and HDBScan for Clustering")
 
 hdbscan_df1 = hdbscan_cluster(result5)
 hdbscan_df1['category'] = hdbscan_df1['category'].replace('-1' ,'outlier')

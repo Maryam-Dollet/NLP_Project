@@ -6,6 +6,8 @@ from cache_func import load_corpus, LDA
 corpus = load_corpus()
 
 st.title("Topic Modeling")
+st.write("file name: topic_modeling.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/topic_modeling.ipynb")
 
 st.subheader("LDA")
 

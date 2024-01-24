@@ -11,6 +11,7 @@ pipe = load_corpus()
 st.title("Data Processing")
 
 st.write("file name: data_cleaning.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/data_cleaning.ipynb")
 
 st.subheader("First Cleaning")
 
@@ -36,6 +37,7 @@ st.dataframe(df3)
 
 st.title("Data Tokenization")
 st.write("file name: data_tokenizaation.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/data_tokenization.ipynb")
 
 st.markdown("##### General Procedure")
 st.write("- Remove punctuation")

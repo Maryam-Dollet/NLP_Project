@@ -10,6 +10,8 @@ df2 = load_reviews_sample()
 st.title("Data Gathering: Web Scraping French Companies on Trustpilot")
 
 st.write("files: scrap_trust_pilot.ipynb and scrap_trust_pilot_2.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/scrap_trust_pilot.ipynb")
+st.write("https://github.com/Maryam-Dollet/NLP_Project/blob/main/scrap_trust_pilot_2.ipynb")
 
 st.write("Using Beautiful Soup to scrap the website first we extracted the links to the categories listed in this link:")
 
